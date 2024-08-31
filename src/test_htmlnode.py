@@ -54,12 +54,16 @@ class TestHTMLNode(unittest.TestCase):
         )
         self.assertEqual(node.to_html(), "<p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>")
 
+
+
     def test_ParentNode_to_html_no_children(self):
         node = ParentNode("p", None)
         with self.assertRaises(ValueError) as context:
             node.to_html()
         self.assertEqual(str(context.exception), "Invalid HTML: Parent Node needs children")
     
+
+
     def test_ParentNode_to_html_no_tag(self):
         node = ParentNode(
             None,
@@ -73,6 +77,8 @@ class TestHTMLNode(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             node.to_html()
         self.assertEqual(str(context.exception), "Invalid HTML: No tag")
+
+
 
     def test_ParentNode_to_html_nested_parents(self):
         node = ParentNode(
