@@ -2,7 +2,13 @@ import unittest
 import textwrap
 from block_markdown import (
     markdown_to_blocks,
-    block_to_block_type
+    block_to_block_type,
+    block_type_paragraph,
+    block_type_code,
+    block_type_heading,
+    block_type_olist,
+    block_type_ulist,
+    block_type_quote
 )
 
 class TestBlockMarkdown(unittest.TestCase):
@@ -64,12 +70,12 @@ class TestBlockMarkdown(unittest.TestCase):
     def test_block_to_block_type_paragraph(self):
         text = "This is a paragraph"
         block_type = block_to_block_type(text)
-        self.assertEqual("paragraph", block_type)
+        self.assertEqual(block_type_paragraph, block_type)
 
     def test_block_to_block_type_heading(self):
         text = "### This is a heading"
         block_type = block_to_block_type(text)
-        self.assertEqual("heading_3", block_type)
+        self.assertEqual(block_type_heading, block_type)
     
     def test_block_to_block_type_code(self):
         text = textwrap.dedent("""\
@@ -78,7 +84,7 @@ class TestBlockMarkdown(unittest.TestCase):
                 print("no")
             ```""")
         block_type = block_to_block_type(text)
-        self.assertEqual("code", block_type)
+        self.assertEqual(block_type_code, block_type)
 
     def test_block_to_block_type_quote(self):
         text = textwrap.dedent("""\
@@ -86,7 +92,7 @@ class TestBlockMarkdown(unittest.TestCase):
             >I could cry
             >but I won't.""")
         block_type = block_to_block_type(text)
-        self.assertEqual("quote", block_type)
+        self.assertEqual(block_type_quote, block_type)
 
     def test_block_to_block_type_ul(self):
         text = textwrap.dedent("""\
@@ -94,7 +100,7 @@ class TestBlockMarkdown(unittest.TestCase):
             * This is a list item
             * This is another list item""")
         block_type = block_to_block_type(text)
-        self.assertEqual("unordered_list", block_type)
+        self.assertEqual(block_type_ulist, block_type)
 
     def test_block_to_block_type_ol(self):
         text = textwrap.dedent("""\
@@ -102,7 +108,7 @@ class TestBlockMarkdown(unittest.TestCase):
             2. This is a list item
             3. This is another list item""")
         block_type = block_to_block_type(text)
-        self.assertEqual("ordered_list", block_type)
+        self.assertEqual(block_type_olist, block_type)
 
 
 if __name__ == "__main__":

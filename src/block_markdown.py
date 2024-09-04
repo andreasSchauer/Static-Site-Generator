@@ -1,3 +1,10 @@
+block_type_paragraph = "paragraph"
+block_type_heading = "heading"
+block_type_code = "code"
+block_type_quote = "quote"
+block_type_olist = "ordered_list"
+block_type_ulist = "unordered_list"
+
 def markdown_to_blocks(markdown):
     blocks = markdown.split("\n\n")
     filtered_blocks = []
@@ -13,39 +20,32 @@ def markdown_to_blocks(markdown):
 
 
 def block_to_block_type(block):
-    if block.startswith("# "):
-        return "heading_1"
-    
-    if block.startswith("## "):
-        return "heading_2"
-    
-    if block.startswith("### "):
-        return "heading_3"
-    
-    if block.startswith("#### "):
-        return "heading_4"
-    
-    if block.startswith("##### "):
-        return "heading_5"
-    
-    if block.startswith("###### "):
-        return "heading_6"
-    
-    if block.startswith("```") and block.endswith("```"):
-        return "code"
-    
     lines = block.split("\n")
+    
+    if (
+        block.startswith("# ")
+        or block.startswith("## ")
+        or block.startswith("### ")
+        or block.startswith("#### ")
+        or block.startswith("##### ")
+        or block.startswith("###### ")
+    ):
+        return block_type_heading
+    
+
+    if len(lines) > 1 and lines[0].startswith("```") and lines[-1].startswith("```"):
+        return block_type_code
 
     is_quote_block = all(line.startswith(">") for line in lines)
     if is_quote_block:
-        return "quote"
+        return block_type_quote
     
     is_unordered_list = all(line.startswith("* ") or line.startswith("- ") for line in lines)
     if is_unordered_list:
-        return "unordered_list"
+        return block_type_ulist
     
     is_ordered_list = all(lines[i].startswith(f"{i + 1}. ") for i in range(len(lines)))
     if is_ordered_list:
-        return "ordered_list"
+        return block_type_olist
     
-    return "paragraph"
+    return block_type_paragraph
