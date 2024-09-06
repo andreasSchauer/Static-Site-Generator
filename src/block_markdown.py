@@ -178,7 +178,6 @@ def olist_to_html_nodes(ordered_list_block):
 
 
 
-
 def get_heading_tag(heading_block):
     hashtags = re.findall(r"^(#+) ", heading_block)
     
@@ -188,8 +187,3 @@ def get_heading_tag(heading_block):
     heading_num = len(hashtags[0])
     heading_tag = f"h{heading_num}"
     return heading_tag
-
-
-
-
-
