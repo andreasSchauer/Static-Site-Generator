@@ -14,20 +14,16 @@ def extract_title(markdown):
 
 
 def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
-    content = Path(dir_path_content)
-
-
-    for entry in content.iterdir():
-        if Path.is_file(entry):
-            if str(entry).endswith(".md"):
-                dest_path = os.path.join(dest_dir_path, "index.html")
-                generate_page(entry, template_path, dest_path)
-        else:
-            current_dir = os.path.split(entry)[-1]
-            new_dest_dir = os.path.join(dest_dir_path, current_dir)
-            generate_pages_recursive(entry, template_path, new_dest_dir)
+    for filename in os.listdir(dir_path_content):
+        from_path = os.path.join(dir_path_content, filename)
+        dest_path = os.path.join(dest_dir_path, filename)
         
-
+        if os.path.isfile(from_path):
+            dest_path = Path(dest_path).with_suffix(".html")
+            generate_page(from_path, template_path, dest_path)
+        else:
+            generate_pages_recursive(from_path, template_path, dest_path)
+        
 
 
 def generate_page(from_path, template_path, dest_path):
