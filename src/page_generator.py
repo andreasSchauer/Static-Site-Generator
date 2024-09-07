@@ -50,6 +50,7 @@ def generate_page(from_path, template_path, dest_path):
         f.write(template)
     
 
+
 def get_file_contents(path):
     with open(path) as f:
         return f.read()
